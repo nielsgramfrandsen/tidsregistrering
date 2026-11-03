@@ -1,0 +1,177 @@
+:root {
+  --bg: #eef2f4;
+  --ink: #14232b;
+  --muted: #55676f;
+  --line: #c9d4d9;
+  --surface: #ffffff;
+  --accent: #0b6e6e;
+  --accent-ink: #ffffff;
+  --danger: #a3261d;
+  --danger-bg: #fbe9e7;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1a1f;
+    --ink: #e6eef1;
+    --muted: #9fb2ba;
+    --line: #2a3b43;
+    --surface: #16262d;
+    --accent: #4fc3c3;
+    --accent-ink: #072020;
+    --danger: #ffb4ab;
+    --danger-bg: #3a1a17;
+  }
+}
+
+* { box-sizing: border-box; }
+html { height: 100%; }
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font: 1rem/1.6 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 1rem; }
+h2 { font-size: 1.4rem; margin: 0 0 1.25rem; }
+p  { max-width: 60ch; color: var(--muted); }
+code { background: var(--surface); border: 1px solid var(--line); padding: .1rem .35rem; border-radius: 4px; }
+
+/* Forside med login */
+.split { display: grid; grid-template-columns: 1.1fr 1fr; }
+.intro { display: flex; flex-direction: column; justify-content: center; padding: 4rem clamp(1.5rem, 6vw, 6rem); }
+.panel { display: flex; align-items: center; justify-content: center; padding: 2rem; background: var(--surface); border-left: 1px solid var(--line); }
+
+.card { width: 100%; max-width: 24rem; }
+label { display: block; margin: 1rem 0 .35rem; font-weight: 600; }
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: .7rem .8rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+input:focus-visible, button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: .75rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent-ink);
+  background: var(--accent);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+button:hover { filter: brightness(1.08); }
+button.ghost { margin: 0; width: auto; background: transparent; color: var(--ink); border: 1px solid var(--line); }
+
+.error {
+  margin: 0 0 .5rem;
+  padding: .7rem .9rem;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-radius: 6px;
+}
+
+/* Beskyttet side */
+.bar { display: flex; align-items: center; justify-content: space-between; padding: 1rem clamp(1rem, 4vw, 3rem); background: var(--surface); border-bottom: 1px solid var(--line); }
+.content { padding: 3rem clamp(1.5rem, 6vw, 6rem); }
+
+@media (max-width: 800px) {
+  .split { grid-template-columns: 1fr; }
+  .intro { padding: 3rem 1.5rem 1rem; }
+  .panel { border-left: 0; border-top: 1px solid var(--line); padding: 2rem 1.5rem 3rem; }
+}
+
+/* Stopur */
+.timer { margin-bottom: 3rem; }
+.clock {
+  font-size: clamp(3.5rem, 14vw, 8rem);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+button.big { width: auto; min-width: 12rem; padding: 1rem 2rem; font-size: 1.15rem; margin-top: 1.5rem; }
+button.big.stop { background: var(--danger); color: var(--surface); }
+button:disabled { opacity: .6; cursor: wait; }
+.today { margin: 1rem 0 0; font-size: 1.1rem; }
+
+details { max-width: 36rem; border-bottom: 1px solid var(--line); padding: .6rem 0; }
+summary { display: flex; justify-content: space-between; gap: 1rem; cursor: pointer; text-transform: capitalize; }
+details ul { list-style: none; margin: .6rem 0 0; padding: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+details li { display: flex; justify-content: space-between; align-items: center; padding: .25rem 0; }
+button.small { padding: .2rem .6rem; font-size: .85rem; font-weight: 400; }
+
+/* Løbende liste */
+.log { list-style: none; margin: 0; padding: 0; max-width: 44rem; font-variant-numeric: tabular-nums; }
+.log li { display: grid; grid-template-columns: 7rem 1fr auto auto; gap: .75rem; align-items: center; padding: .55rem 0; border-bottom: 1px solid var(--line); }
+.log .date { text-transform: capitalize; color: var(--muted); }
+.log .dur { font-weight: 600; text-align: right; }
+.log li.live { color: var(--accent); }
+.log li.live .date { color: inherit; }
+@media (max-width: 560px) {
+  .log li { grid-template-columns: 1fr auto; }
+  .log .time { grid-column: 1 / -1; order: 3; color: var(--muted); }
+}
+
+/* To kolonner og graf */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, 30rem); gap: 3rem; align-items: start; }
+.chart-box { position: sticky; top: 1.5rem; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 1.25rem; }
+.chart-box h2 { margin-bottom: 1rem; }
+.chart-box .legend { margin: .75rem 0 0; font-size: .9rem; }
+#chart svg { display: block; width: 100%; height: auto; }
+.c-grid { stroke: var(--line); stroke-width: 1; }
+.c-axis { fill: var(--muted); font-size: 11px; }
+.c-val { fill: var(--ink); font-size: 10px; text-anchor: middle; }
+.c-bar { fill: var(--accent); opacity: .5; }
+.c-bar.today { opacity: 1; }
+@media (max-width: 1000px) {
+  .layout { grid-template-columns: 1fr; gap: 1rem; }
+  .chart-box { position: static; }
+}
+
+/* Mobil og tablet */
+button, input[type=text], input[type=password] { min-height: 44px; }
+button.small { min-height: 40px; padding: .4rem .9rem; }
+.c-bar { cursor: pointer; }
+.chart-box .info { min-height: 1.6em; margin-top: .25rem; color: var(--ink); }
+.bar { flex-wrap: wrap; gap: .5rem; }
+.bar strong { overflow-wrap: anywhere; }
+
+@media (max-width: 1000px) {
+  .col { display: contents; }
+  .timer { order: 1; margin-bottom: 1rem; }
+  .chart-box { order: 2; margin-bottom: 1.5rem; }
+  .history { order: 3; }
+  .content { padding: 2rem clamp(1rem, 5vw, 3rem); }
+}
+
+@media (max-width: 600px) {
+  .content { padding: 1.5rem 1rem 3rem; }
+  button.big { width: 100%; min-width: 0; }
+  .chart-box { padding: 1rem .75rem; }
+  .log li { grid-template-columns: 1fr auto auto; gap: .5rem; }
+  .log .time { grid-column: 1 / -1; order: 3; color: var(--muted); }
+  details { max-width: none; }
+}
+
+/* Note til tidsregistrering */
+#note { display: block; width: 100%; max-width: 36rem; margin-top: 1.25rem; }
+.log .actions { display: flex; gap: .4rem; justify-content: flex-end; }
+.log .note { grid-column: 1 / -1; color: var(--ink); overflow-wrap: anywhere; }
+.log .note:empty { display: none; }
+.log .note.editing { display: flex; gap: .4rem; flex-wrap: wrap; }
+.log .note.editing input { flex: 1 1 12rem; min-width: 0; }
+@media (max-width: 600px) {
+  .log .note { order: 4; }
+}

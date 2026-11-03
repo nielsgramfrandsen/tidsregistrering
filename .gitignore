@@ -1,0 +1,3 @@
+# Hemmeligheder og brugerdata
+inc/config.php
+inc/data/*.json
